@@ -1,4 +1,4 @@
-package com.csti.resources;
+package com.csti.app.resources;
 
 import java.net.URI;
 
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.csti.model.Catalogo;
-import com.csti.services.CatalogoService;
+import com.csti.app.model.Catalogo;
+import com.csti.app.services.CatalogoService;
 
 @RestController
 @RequestMapping(value = "/catalogo")
@@ -24,7 +24,7 @@ public class CatalogoResource {
 	@Autowired
 	private CatalogoService service;
 	
-	@GetMapping(value = "/id")
+	@GetMapping(value = "/{id}")
 	public ResponseEntity<Catalogo> findById(@PathVariable Integer id){
 		Catalogo obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);

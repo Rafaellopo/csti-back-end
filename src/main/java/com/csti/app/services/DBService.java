@@ -1,10 +1,10 @@
-package com.csti.services;
+package com.csti.app.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.csti.model.Catalogo;
-import com.csti.repositories.CatalogoRepository;
+import com.csti.app.model.Catalogo;
+import com.csti.app.repositories.CatalogoRepository;
 
 @Service
 public class DBService {

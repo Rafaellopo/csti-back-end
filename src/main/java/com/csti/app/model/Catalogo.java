@@ -1,4 +1,4 @@
-package com.csti.model;
+package com.csti.app.model;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -23,20 +23,20 @@ public class Catalogo implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@NotEmpty(message = "Campo SETOR não pode ser vazio")
-	@Length(min = 5, max = 5, message = "O campo SETOR só pode ter 5 caracteres")
+	//@NotEmpty(message = "Campo SETOR não pode ser vazio")
+	//@Length(min = 5, message = "O campo SETOR só pode ter 5 caracteres")
 	private String setor;
 	
-	@NotEmpty(message = "O campo PRÉDIO não pode ser vazio")
-	@Length(min = 4, message = "O campo PRÉDIO tem que ter no mínimo 4 caracteres")
+	//@NotEmpty(message = "O campo PRÉDIO não pode ser vazio")
+	//@Length(min = 4, message = "O campo PRÉDIO tem que ter no mínimo 4 caracteres")
 	private String predio;
 	
-	@NotEmpty(message = "O campo ANDAR não pode ser vazio")
-	@Length(min = 5, message = "O campo ANDAR tem que ter no mínimo 5 caracteres")
+	//@NotEmpty(message = "O campo ANDAR não pode ser vazio")
+	//@Length(min = 5, message = "O campo ANDAR tem que ter no mínimo 5 caracteres")
 	private String andar;
 	
-	@NotEmpty(message = "O campo SALA não pode ser vazio")
-	@Length(min = 1, message = "O campo SALA tem que ter no mínimo 1 caracter")
+	//@NotEmpty(message = "O campo SALA não pode ser vazio")
+	//@Length(min = 1, message = "O campo SALA tem que ter no mínimo 1 caracter")
 	private Integer sala;
 
 	public Catalogo() {

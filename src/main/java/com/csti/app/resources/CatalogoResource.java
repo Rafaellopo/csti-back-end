@@ -1,6 +1,7 @@
 package com.csti.app.resources;
 
 import java.net.URI;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -20,18 +21,30 @@ import com.csti.app.services.CatalogoService;
 @RestController
 @RequestMapping(value = "/catalogo")
 public class CatalogoResource {
-	
+
 	@Autowired
 	private CatalogoService service;
-	
+
+	@GetMapping
+	public ResponseEntity<List<Catalogo>> listAll() {
+		List<Catalogo> listObj = service.findAll();
+		return ResponseEntity.ok().body(listObj);
+	}
+
+	@GetMapping(value = "/setor/{setor}")
+	public ResponseEntity<List<Catalogo>> listAllBySetor(@PathVariable String setor) {
+		List<Catalogo> listObjs = service.findAllBySetor(setor);
+		return ResponseEntity.ok().body(listObjs);
+	}
+
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Catalogo> findById(@PathVariable Integer id){
+	public ResponseEntity<Catalogo> findById(@PathVariable Integer id) {
 		Catalogo obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<Catalogo> createCatalogo(@Valid @RequestBody Catalogo obj){
+	public ResponseEntity<Catalogo> createCatalogo(@Valid @RequestBody Catalogo obj) {
 		obj = service.create(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/id").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);

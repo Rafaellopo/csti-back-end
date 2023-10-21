@@ -14,26 +14,41 @@ public class CatalogoService {
 
 	@Autowired
 	private CatalogoRepository catalogoRepository;
-	
-	
+
 	public Catalogo findById(Integer id) {
 		Optional<Catalogo> obj = catalogoRepository.findById(id);
 		return obj.get();
 	}
-	
+
 	public List<Catalogo> findAll() {
 		return catalogoRepository.findAll();
 	}
-	
-	public List<Catalogo> findAllBySetor(String setor){
+
+	public List<Catalogo> findAllBySetor(String setor) {
 		return catalogoRepository.findAllBySetorIgnoreCaseContaining(setor);
 	}
-	
-	
 
 	public Catalogo create(Catalogo obj) {
 		obj.setId(null);
 		return catalogoRepository.save(obj);
+	}
+
+	public Catalogo update(Integer id, Catalogo objUpdate) {
+		Catalogo obj = findById(id);
+		obj.setSetor(objUpdate.getSetor());
+		obj.setPredio(objUpdate.getPredio());
+		obj.setAndar(objUpdate.getAndar());
+		obj.setSala(objUpdate.getSala());
+
+		return catalogoRepository.save(obj);
+	}
+
+	public void delete(Integer id) {
+		Catalogo obj = findById(id);
+
+		if (obj != null) {
+			catalogoRepository.delete(obj);
+		}
 	}
 
 }

@@ -29,18 +29,23 @@ public class Pessoa implements Serializable{
 	
 	@NotEmpty
 	private String cargo;
+	
+	@NotEmpty
+	private String equipe;
 
 	public Pessoa() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Pessoa(Integer id, @NotEmpty String nome, @NotEmpty String status, @NotEmpty String cargo) {
+	public Pessoa(Integer id, @NotEmpty String nome, @NotEmpty String status, @NotEmpty String cargo,
+			@NotEmpty String equipe) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.status = status;
 		this.cargo = cargo;
+		this.equipe = equipe;
 	}
 
 	public Integer getId() {
@@ -75,6 +80,14 @@ public class Pessoa implements Serializable{
 		this.cargo = cargo;
 	}
 
+	public String getEquipe() {
+		return equipe;
+	}
+
+	public void setEquipe(String equipe) {
+		this.equipe = equipe;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -91,6 +104,7 @@ public class Pessoa implements Serializable{
 		Pessoa other = (Pessoa) obj;
 		return Objects.equals(id, other.id);
 	}
+	
 	
 	
 	

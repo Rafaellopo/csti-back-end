@@ -23,11 +23,28 @@ public class PessoaService {
 		pessoa.setId(null);
 		return pessoaRepository.save(pessoa);
 	}
-	
-	public Pessoa findById(Integer id){
+
+	public Pessoa findById(Integer id) {
 		Optional<Pessoa> pessoa = pessoaRepository.findById(id);
 		return pessoa.get();
-		
+
+	}
+
+	public Pessoa update(Integer id, Pessoa pessoaObj) {
+		Pessoa obj = findById(id);
+		obj.setCargo(pessoaObj.getCargo());
+		obj.setEquipe(pessoaObj.getEquipe());
+		obj.setNome(pessoaObj.getNome());
+		obj.setStatus(pessoaObj.getStatus());
+		return this.pessoaRepository.save(obj);
+	}
+	
+	
+	public void delete(Integer id) {
+		Pessoa pessoa = findById(id);
+		if(pessoa != null) {
+			pessoaRepository.delete(pessoa);
+		}
 	}
 
 }

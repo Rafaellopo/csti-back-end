@@ -7,7 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Pessoa implements Serializable{
@@ -24,22 +29,28 @@ public class Pessoa implements Serializable{
 	@NotEmpty
 	private String nome;
 	
-	@NotEmpty
-	private String status;
 	
-	@NotEmpty
-	private String cargo;
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "status_id")
+	private Status status ;
 	
-	@NotEmpty
-	private String equipe;
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "cargo_id")
+	private Cargo cargo;
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "equipe_id")
+	private Equipe equipe;
 
 	public Pessoa() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Pessoa(Integer id, @NotEmpty String nome, @NotEmpty String status, @NotEmpty String cargo,
-			@NotEmpty String equipe) {
+	public Pessoa(Integer id, String nome, Status status, Cargo cargo, Equipe equipe) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -64,27 +75,27 @@ public class Pessoa implements Serializable{
 		this.nome = nome;
 	}
 
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 
-	public String getCargo() {
+	public Cargo getCargo() {
 		return cargo;
 	}
 
-	public void setCargo(String cargo) {
+	public void setCargo(Cargo cargo) {
 		this.cargo = cargo;
 	}
 
-	public String getEquipe() {
+	public Equipe getEquipe() {
 		return equipe;
 	}
 
-	public void setEquipe(String equipe) {
+	public void setEquipe(Equipe equipe) {
 		this.equipe = equipe;
 	}
 

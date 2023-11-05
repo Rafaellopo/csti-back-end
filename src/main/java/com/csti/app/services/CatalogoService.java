@@ -25,7 +25,9 @@ public class CatalogoService {
 	}
 
 	public List<Catalogo> findAllBySetor(String setor) {
-		return catalogoRepository.findAllBySetorIgnoreCaseContaining(setor);
+		//return catalogoRepository.findAllBySetorIgnoreCaseContaining(setor);
+		return catalogoRepository.findAllBySetor(setor.toUpperCase());
+
 	}
 
 	public Catalogo create(Catalogo obj) {

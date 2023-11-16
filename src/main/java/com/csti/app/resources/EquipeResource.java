@@ -2,8 +2,7 @@ package com.csti.app.resources;
 
 import java.net.URI;
 import java.util.List;
-
-import javax.validation.Valid;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,51 +17,48 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.csti.app.model.Catalogo;
-import com.csti.app.services.CatalogoService;
+import com.csti.app.dtos.EquipeDTO;
+import com.csti.app.model.Equipe;
+import com.csti.app.services.EquipeService;
 
 @CrossOrigin("http://localhost:4200/")
 @RestController
-@RequestMapping(value = "/catalogo")
-public class CatalogoResource {
+@RequestMapping(value = "/equipe")
+public class EquipeResource {
 
 	@Autowired
-	private CatalogoService service;
+	private EquipeService equipeService;
 
 	@GetMapping
-	public ResponseEntity<List<Catalogo>> listAll() {
-		List<Catalogo> listObj = service.findAll();
-		return ResponseEntity.ok().body(listObj);
-	}
-
-	@GetMapping(value = "/setor/{setor}")
-	public ResponseEntity<List<Catalogo>> listAllBySetor(@PathVariable String setor) {
-		List<Catalogo> listObjs = service.findAllBySetor(setor);
-		return ResponseEntity.ok().body(listObjs);
+	public ResponseEntity<List<EquipeDTO>> listAll() {
+		List<Equipe> list = equipeService.listAll();
+		List<EquipeDTO> listDTO = list.stream().map(obj -> new EquipeDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDTO);
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Catalogo> findById(@PathVariable Integer id) {
-		Catalogo obj = service.findById(id);
-		return ResponseEntity.ok().body(obj);
+	public ResponseEntity<Equipe> findById(@PathVariable Integer id) {
+		Equipe equipe = equipeService.findById(id);
+		return ResponseEntity.ok().body(equipe);
 	}
 
 	@PostMapping
-	public ResponseEntity<Catalogo> createCatalogo(@Valid @RequestBody Catalogo obj) {
-		obj = service.create(obj);
+	public ResponseEntity<Equipe> create(@RequestBody Equipe equipe) {
+		Equipe obj = equipeService.create(equipe);
+
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/id").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Catalogo> update(@PathVariable Integer id, @RequestBody Catalogo objCatalogo) {
-		objCatalogo = service.update(id, objCatalogo);
-		return ResponseEntity.ok().body(objCatalogo);
+	public ResponseEntity<Equipe> update(@PathVariable Integer id, @RequestBody Equipe equipe) {
+		Equipe obj = equipeService.update(id, equipe);
+		return ResponseEntity.ok().body(obj);
 	}
-	
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Integer id){
-		service.delete(id);
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+		equipeService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 

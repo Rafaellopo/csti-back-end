@@ -2,6 +2,7 @@ package com.csti.app.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -18,52 +19,73 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.csti.app.model.Catalogo;
-import com.csti.app.services.CatalogoService;
+import com.csti.app.dtos.StatusDTO;
+import com.csti.app.model.Status;
+import com.csti.app.services.StatusService;
 
 @CrossOrigin("http://localhost:4200/")
 @RestController
-@RequestMapping(value = "/catalogo")
-public class CatalogoResource {
-
+@RequestMapping(value = "/status")
+public class StatusResource {
+	
 	@Autowired
-	private CatalogoService service;
-
+	private StatusService statusService;
+	
 	@GetMapping
-	public ResponseEntity<List<Catalogo>> listAll() {
-		List<Catalogo> listObj = service.findAll();
-		return ResponseEntity.ok().body(listObj);
+	public ResponseEntity<List<StatusDTO>> findAll(){
+		List<Status> list  = statusService.findAll();
+		List<StatusDTO> listDTO = list.stream().map(obj -> new StatusDTO(obj)).collect(Collectors.toList());
+		
+		return ResponseEntity.ok().body(listDTO);
 	}
-
-	@GetMapping(value = "/setor/{setor}")
-	public ResponseEntity<List<Catalogo>> listAllBySetor(@PathVariable String setor) {
-		List<Catalogo> listObjs = service.findAllBySetor(setor);
-		return ResponseEntity.ok().body(listObjs);
-	}
-
+	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Catalogo> findById(@PathVariable Integer id) {
-		Catalogo obj = service.findById(id);
-		return ResponseEntity.ok().body(obj);
+	public ResponseEntity<Status> findById(@PathVariable Integer id){
+		Status status = statusService.findById(id);
+		return ResponseEntity.ok().body(status);
 	}
-
+	
 	@PostMapping
-	public ResponseEntity<Catalogo> createCatalogo(@Valid @RequestBody Catalogo obj) {
-		obj = service.create(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/id").buildAndExpand(obj.getId()).toUri();
+	public ResponseEntity<Status> create(@Valid @RequestBody Status obj){
+		obj = statusService.create(obj);
+		
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		
 		return ResponseEntity.created(uri).body(obj);
 	}
-
+	
 	@PutMapping("/{id}")
-	public ResponseEntity<Catalogo> update(@PathVariable Integer id, @RequestBody Catalogo objCatalogo) {
-		objCatalogo = service.update(id, objCatalogo);
-		return ResponseEntity.ok().body(objCatalogo);
+	public ResponseEntity<StatusDTO> update(@PathVariable Integer id, @RequestBody StatusDTO objDTO){
+		Status newObj = statusService.create(id, objDTO);
+		
+		return ResponseEntity.ok().body(new StatusDTO(newObj));
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id){
-		service.delete(id);
+		statusService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

@@ -29,17 +29,21 @@ public class Equipe implements Serializable {
 
 	@OneToMany(mappedBy = "equipe")
 	private List<Pessoa> pessoas = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "equipe")
+	private List<Lista> listas = new ArrayList<>();
 
 	public Equipe() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Equipe(Integer id, @NotEmpty String descricao, List<Pessoa> pessoas) {
+	public Equipe(Integer id, @NotEmpty String descricao, List<Pessoa> pessoas, List<Lista> listas) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
 		this.pessoas = pessoas;
+		this.listas = listas;
 	}
 
 	public Integer getId() {
@@ -64,6 +68,16 @@ public class Equipe implements Serializable {
 
 	public void setPessoas(List<Pessoa> pessoas) {
 		this.pessoas = pessoas;
+	}
+	
+	
+
+	public List<Lista> getListas() {
+		return listas;
+	}
+
+	public void setListas(List<Lista> listas) {
+		this.listas = listas;
 	}
 
 	@Override

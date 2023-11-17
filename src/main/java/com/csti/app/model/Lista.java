@@ -1,6 +1,7 @@
 package com.csti.app.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -15,54 +16,46 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Pessoa implements Serializable{
+public class Lista implements Serializable{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
 	@NotEmpty
-	private String nome;
-	
-	
-	@JsonIgnore
-	@ManyToOne
-	@JoinColumn(name = "status_id")
-	private Status status ;
-	
-	@JsonIgnore
-	@ManyToOne
-	@JoinColumn(name = "cargo_id")
-	private Cargo cargo;
-	
-	@JsonIgnore
-	@ManyToOne
-	@JoinColumn(name = "equipe_id")
-	private Equipe equipe;
+	private String descricao;
 
 	
-	@OneToMany(mappedBy = "pessoa")
+	// "date": "03-12-1986 10:08:02"
+	@NotNull
+	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+	private LocalDateTime date;
+	
+	@JsonIgnore @ManyToOne @JoinColumn(name = "equipe_id")
+	private Equipe equipe;
+	
+	@OneToMany(mappedBy = "lista")
 	private List<ItemLista> itens = new ArrayList<>();
 
-	public Pessoa() {
+	public Lista() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Pessoa(Integer id, String nome, Status status, Cargo cargo, Equipe equipe, List<ItemLista> itens) {
+	public Lista(Integer id, String descricao, LocalDateTime date, Equipe equipe, List<ItemLista> itens) {
 		super();
 		this.id = id;
-		this.nome = nome;
-		this.status = status;
-		this.cargo = cargo;
+		this.descricao = descricao;
+		this.date = date;
 		this.equipe = equipe;
 		this.itens = itens;
 	}
@@ -75,28 +68,20 @@ public class Pessoa implements Serializable{
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
-	public Status getStatus() {
-		return status;
+	public LocalDateTime getDate() {
+		return date;
 	}
 
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-
-	public Cargo getCargo() {
-		return cargo;
-	}
-
-	public void setCargo(Cargo cargo) {
-		this.cargo = cargo;
+	public void setDate(LocalDateTime date) {
+		this.date = date;
 	}
 
 	public Equipe getEquipe() {
@@ -106,7 +91,6 @@ public class Pessoa implements Serializable{
 	public void setEquipe(Equipe equipe) {
 		this.equipe = equipe;
 	}
-	
 
 	public List<ItemLista> getItens() {
 		return itens;
@@ -129,14 +113,9 @@ public class Pessoa implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Pessoa other = (Pessoa) obj;
+		Lista other = (Lista) obj;
 		return Objects.equals(id, other.id);
 	}
 	
-	
-	
-	
-	
-	
-	
+		
 }

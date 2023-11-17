@@ -1,12 +1,15 @@
 package com.csti.app.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
@@ -38,6 +41,9 @@ public class Catalogo implements Serializable {
 	@NotEmpty(message = "O campo SALA não pode ser vazio")
 	@Length(min = 1, message = "O campo SALA tem que ter no mínimo 1 caracter")
 	private Integer sala;
+	
+	@OneToMany(mappedBy = "catalogo")
+	private List<ItemLista> itens = new ArrayList<>();
 
 	public Catalogo() {
 		super();
@@ -91,6 +97,14 @@ public class Catalogo implements Serializable {
 
 	public void setSala(Integer sala) {
 		this.sala = sala;
+	}
+
+	public List<ItemLista> getItens() {
+		return itens;
+	}
+
+	public void setItens(List<ItemLista> itens) {
+		this.itens = itens;
 	}
 
 	@Override

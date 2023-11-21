@@ -15,7 +15,7 @@ public class ItemListaDTO implements Serializable {
 	
 	private Integer id;
 	
-	private String atendiemento;
+	private String atendimento;
 	
 	private LocalDateTime date;
 	
@@ -42,7 +42,7 @@ public class ItemListaDTO implements Serializable {
 	public ItemListaDTO(ItemLista  itens) {
 		super();
 		this.id = itens.getId();
-		this.atendiemento = itens.getAtendimento();
+		this.atendimento = itens.getAtendimento();
 		this.date = itens.getDate();
 		this.catalogo_id = itens.getCatalogo().getId();
 		this.catalogo = itens.getCatalogo().getSetor();
@@ -63,13 +63,13 @@ public class ItemListaDTO implements Serializable {
 	}
 
 
-	public String getAtendiemento() {
-		return atendiemento;
+	public String getAtendimento() {
+		return atendimento;
 	}
 
 
-	public void setAtendiemento(String atendiemento) {
-		this.atendiemento = atendiemento;
+	public void setAtendimento(String atendimento) {
+		this.atendimento = atendimento;
 	}
 
 
